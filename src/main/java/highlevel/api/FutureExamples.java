@@ -10,7 +10,6 @@ public class FutureExamples {
 
     public static void main(String[] args) throws InterruptedException {
         cancelRunningTasksExample();
-
     }
 
     /**
