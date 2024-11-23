@@ -41,7 +41,8 @@ public class FutureExamples {
                     counter++;
                     Thread.sleep(500);
                 } catch (InterruptedException e) {
-                    System.out.println("got interrupted");
+                    System.out.println("got interrupted, preserve interrupt flag");
+                    Thread.currentThread().interrupt();
                     return;
                 }
             }
