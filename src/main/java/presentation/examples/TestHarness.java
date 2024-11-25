@@ -26,7 +26,7 @@ public class TestHarness {
             t.start();
         }
         long start = System.nanoTime();
-        Thread.sleep(10);
+        Thread.sleep(1000);
         startGate.countDown();
         endGate.await();
         long end = System.nanoTime();

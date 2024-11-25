@@ -24,25 +24,24 @@ public class TransferMoneyDeadlock {
     }
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        Account fromAccount = new Account(200);
-        Account toAccount = new Account(20);
+        Account ivan = new Account(2000);
+        Account andrei = new Account(2000);
         List<Runnable> transactions = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 100; i++) {
             transactions.add(() -> {
                 new TransferMoneyDeadlock().transferMoney(
-                    fromAccount, toAccount, 10
+                    ivan, andrei, 10
+                );
+            });
+            transactions.add(() -> {
+                new TransferMoneyDeadlock().transferMoney(
+                    andrei, ivan, 10
                 );
             });
         }
-        for (int i = 0; i < 10; i++) {
-            transactions.add(() -> {
-                new TransferMoneyDeadlock().transferMoney(
-                    toAccount, fromAccount, 10
-                );
-            });
-        }
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        ExecutorService executorService = Executors.newFixedThreadPool(5);
         transactions.forEach(executorService::execute);
+        executorService.shutdown();
     }
 
     private static class Account {
